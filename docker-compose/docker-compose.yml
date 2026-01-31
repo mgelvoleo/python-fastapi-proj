@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  jenkins-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: jenkins-ansible:lts
+    container_name: jenkins-server
+    restart: unless-stopped
+
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.ssh:/var/jenkins_home/.ssh:ro
+
+    environment:
+      JAVA_OPTS: "-Xmx6g -Xms2g -XX:+UseG1GC"
+
+    group_add:
+      - "1001"
+
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 8g
+
+volumes:
+  jenkins_home:
