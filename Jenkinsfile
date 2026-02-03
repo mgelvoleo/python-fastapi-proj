@@ -42,6 +42,14 @@ pipeline {
             }
         }
 
+        stage('Update K8s Manifest') {
+            steps {
+                sh """
+                    sed -i 's|image:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|' \
+                    k8s/dev/deployment.yaml
+                """
+            }
+        }   
 
         stage('Deploy to Kubernetes') { 
             steps {
