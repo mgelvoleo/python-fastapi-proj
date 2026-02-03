@@ -13,6 +13,25 @@ pipeline {
 
     stages {
 
+        stage('Set Environment Variables') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'dev') {
+                        env.ENV = "dev"
+                    } else if (env.BRANCH_NAME == 'main') {
+                        env.ENV = "main"
+                    } else {
+                        env.ENV = "prod"
+                    }
+
+                    echo echo "🚀 Branch: ${env.BRANCH_NAME}"
+                    echo "🌍 Target ENV: ${env.ENV}"
+
+                }
+            }
+        }
+
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -97,7 +116,7 @@ pipeline {
             }
         }   
 
-        stage('Deploy to Kubernetes') { 
+        /* stage('Deploy to Kubernetes') { 
             steps {
                 sshagent(['ssh-k8s']) {
                     sh '''
@@ -106,7 +125,7 @@ pipeline {
                     '''
                 }
             }
-        }
+        } */
     }
 }
 
