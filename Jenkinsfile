@@ -92,7 +92,7 @@ pipeline {
             steps {
                 sh """
                     sed -i 's|image:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|' \
-                    k8s/dev/deployment.yaml
+                    k8s/deployment.yaml
                 """
             }
         }   
