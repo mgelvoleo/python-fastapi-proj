@@ -24,7 +24,7 @@ pipeline {
                         env.ENV = "prod"
                     }
 
-                    echo echo "🚀 Branch: ${env.BRANCH_NAME}"
+                    echo "🚀 Branch: ${env.BRANCH_NAME}"
                     echo "🌍 Target ENV: ${env.ENV}"
 
                 }
