@@ -42,6 +42,21 @@ pipeline {
             }
         }
 
+        steps {
+                script {
+                    echo "🧹 Cleaning up local Docker images (keeping latest ${KEEP_IMAGES})"
+
+                    sh '''
+                        docker image ls "${IMAGE_NAME}" \
+                        --filter "reference=*:${IMAGE_TAG}" \
+                        --format '{{.Repository}}:{{.Tag}}' | \
+                        grep -v ':latest' | \
+                        tail -n +$((KEEP_IMAGES+1)) | \
+                        xargs -r docker rmi -f 2>/dev/null || true
+                    '''
+                }
+        }
+
         stage('Update K8s Manifest') {
             steps {
                 sh """
