@@ -136,10 +136,10 @@ pipeline {
             }
             steps {
                 sshagent(['ssh-k8s']) {
-                    sh '''
+                    sh """
                         kubectl apply -f k8s/${env.ENV}/deployment.yaml
                         kubectl apply -f k8s/${env.ENV}/services.yaml
-                    '''
+                    """
                 }
             }
         }
