@@ -114,18 +114,35 @@ pipeline {
                     k8s/deployment.yaml
                 """
             }
-        }   
+        }  
 
-        /* stage('Deploy to Kubernetes') { 
+        stage('Approval for PROD') {
+            when {
+                branch 'prod'
+            }
+            steps {
+                input message: "🚨 Deploy to PROD environment?", ok: "Deploy"
+            }
+        }
+       
+
+        stage('Deploy to Kubernetes') { 
+            when {
+                anyOf {
+                    branch 'dev'
+                    branch 'main'
+                    branch 'prod'
+                }
+            }
             steps {
                 sshagent(['ssh-k8s']) {
                     sh '''
-                        kubectl apply -f k8s/deployment.yaml
-                        kubectl apply -f k8s/services.yaml
+                        kubectl apply -f k8s/${env.ENV}/deployment.yaml
+                        kubectl apply -f k8s/${env.ENV}/services.yaml
                     '''
                 }
             }
-        } */
+        }
     }
 }
 
