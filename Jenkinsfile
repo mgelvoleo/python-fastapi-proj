@@ -54,10 +54,11 @@ pipeline {
 
         stage('Build Docker Image & Push to Docker Hub') {
             steps {
-                sh '''
-                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+                sh """
+                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} -t ${IMAGE_NAME}:latest .
                     docker push ${IMAGE_NAME}:${IMAGE_TAG}
-                '''
+                    docker push ${IMAGE_NAME}:latest
+                """
             }
         }
 
@@ -110,8 +111,7 @@ pipeline {
         stage('Update K8s Manifest') {
             steps {
                 sh """
-                    sed -i 's|image:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|' \
-                    k8s/deployment.yaml
+                    sed -i 's|image:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|' k8s/${env.ENV}/deployment.yaml
                 """
             }
         }  

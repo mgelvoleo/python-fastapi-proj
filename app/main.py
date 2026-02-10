@@ -8,4 +8,4 @@ app.include_router(health_router)
 
 @app.get("/")
 def root():
-    return {"message": "FastAPI is running 🚀"}
+    return {"message": "FastAPI is running 🚀 1"}
