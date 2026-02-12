@@ -9,6 +9,7 @@ pipeline {
         IMAGE_NAME = "mgelvoleo/fastapi-app"
         IMAGE_TAG = "1.0.${BUILD_NUMBER}"
         KEEP_IMAGES = "5"
+        KUBECONFIG = credentials('kubeconfig-docker-desktop')
     }
 
     stages {
