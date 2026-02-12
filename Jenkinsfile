@@ -139,7 +139,7 @@ pipeline {
                 
                 sh '''
                    echo "Deployment successful!"
-                   echo "The internal port is: $(kubectl get svc fastapi-service -n ${ENV} -o jsonpath='{.spec.ports[0].port}')"
+                   echo "The internal port is: $(kubectl get svc fastapi-service -n ${ENV} -o jsonpath='{.spec.ports[0].nodePort}')"
                    echo "The EXTERNAL (NodePort) is: ${PORT}"
                    echo "Access your app at: http://localhost:${PORT}"
                 '''
