@@ -138,10 +138,10 @@ pipeline {
             steps {
                 
                 sh '''
-                    kubectl apply -f k8s/${ENV}/deployment.yaml
-                    kubectl apply -f k8s/${ENV}/services.yaml
-                    PORT=$(kubectl get svc fastapi-service -n ${ENV} -o jsonpath='{.spec.ports[0].port}')
-                    echo "the port is ${PORT}"
+                   echo "Deployment successful!"
+                   echo "The internal port is: $(kubectl get svc fastapi-service -n ${ENV} -o jsonpath='{.spec.ports[0].port}')"
+                   echo "The EXTERNAL (NodePort) is: ${PORT}"
+                   echo "Access your app at: http://localhost:${PORT}"
                 '''
                 
             }
