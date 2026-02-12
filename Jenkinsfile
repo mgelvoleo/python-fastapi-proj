@@ -137,12 +137,12 @@ pipeline {
             }
             steps {
                 
-                sh """
-                    kubectl apply -f k8s/${env.ENV}/deployment.yaml
-                    kubectl apply -f k8s/${env.ENV}/services.yaml
-                    PORT=$(kubectl get svc fastapi-app -n ${env.ENV} -o jsonpath='{.spec.ports[0].port}')
+                sh '''
+                    kubectl apply -f k8s/${ENV}/deployment.yaml
+                    kubectl apply -f k8s/${ENV}/services.yaml
+                    PORT=$(kubectl get svc fastapi-app -n ${ENV} -o jsonpath='{.spec.ports[0].port}')
                     echo "the port is ${PORT}"
-                   """
+                '''
                 
             }
         }
