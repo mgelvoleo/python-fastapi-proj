@@ -137,15 +137,10 @@ pipeline {
             }
             steps {
                 sh '''
-                    kubectl apply -f k8s/${ENV}/namespace.yaml
-                    kubectl apply -f k8s/${ENV}/deployment.yaml -n ${ENV}
-
-                    kubectl set image deployment/fastapi-app \
-                        fastapi-app=${IMAGE_NAME}:${IMAGE_TAG} \
-                        -n ${ENV}
-
-                    kubectl apply -f k8s/${ENV}/service.yaml -n ${ENV}
-                    kubectl rollout status deployment/fastapi-app -n ${ENV}
+                   kubectl apply -f k8s/${ENV}/namespace.yaml
+                   kubectl apply -f k8s/${ENV}/deployment.yaml -n ${ENV}
+                   kubectl apply -f k8s/${ENV}/service.yaml -n ${ENV}
+                   kubectl rollout status deployment/fastapi-app -n ${ENV}
                 '''
                 
                 sh '''
