@@ -138,7 +138,7 @@ pipeline {
             steps {
                 sh '''
                     kubectl apply -f k8s/${ENV}/namespace.yaml
-                    kubectl apply -f k8s/${ENV}/deployment.yaml -n ${K8S_NS}
+                    kubectl apply -f k8s/${ENV}/deployment.yaml -n ${ENV}
 
                     kubectl set image deployment/python-app \
                         python-app=${IMAGE_NAME}:${IMAGE_TAG} \
